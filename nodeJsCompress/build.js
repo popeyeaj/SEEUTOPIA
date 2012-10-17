@@ -1,4 +1,5 @@
 
+JS_DIR = 'lib/'
 JS_COMPILER_CORE = 'lib/compiler.jar';
 JS_LIST_PATH = 'lib/_jsfiles.list';
 JS_OUTPUT_FILE = 'live/utopia.min.js';
@@ -15,12 +16,13 @@ var Robot = {
     js_files: new Array(),
     recent_modified: new Array(),
     last_modified: new Array(),
+    fs: require('fs'),
     msg: ["Watching for changes...",
             "Stupid human beings, just give me something fun to do!!!",
             "I'm bored..."],
     lastmodified: function(){
-        var fs = require('fs');
-        var _temp = new Array();
+        var fs = require('fs'),
+            _temp = new Array();
         for(var i=0; i<this.js_files.length; i++){
             _temp.push(new Date(fs.statSync(this.js_files[i]).mtime).getTime());
         }
@@ -39,28 +41,42 @@ var Robot = {
         }
         if(this.js_files.length){
             this.toCompile(function(){
+                d.switch_compile = d.fileListener();
                 d.fileWatcher();
             });
         }
         else{
-            log('No js-file need to be compiled!');
+            log('Did not add any js-file yet.');
         }
     },
     fileWatcher: function(){
-        var Bot = this;
-        Bot.recent_modified = Bot.lastmodified();
-        Bot.switch_compile = setInterval(function(){
-            var dx = Math.round(Math.random() * 10 / 4);
-            if(Bot.recent_modified.toString() == Bot.lastmodified().toString()){
-                log(Bot.msg[dx]);
+        var Bot = this,
+            count = 0;
+        Bot.fs.watch(JS_DIR, function(event, filename){
+            count++;
+            filename = JS_DIR + filename;
+            if(count == 3){
+                for(var i=0; i<Bot.js_files.length; i++){
+                    if(filename == Bot.js_files[i]){
+                        if(Bot.switch_compile != null) clearInterval(Bot.switch_compile);
+                        log('--->Doing some fucking works!')
+                        Bot.toCompile(function(){
+                            Bot.switch_compile = Bot.fileListener();
+                            Bot.fileWatcher();
+                        });
+                        break;
+                    }
+                }
             }
-            else{
-                log('--->Doing some fucking works!')
-                Bot.toCompile(function(){
-                    Bot.fileWatcher();
-                });
-                Bot.recent_modified = Bot.lastmodified().toString();
-            }
+        });
+    },
+    fileListener: function(){
+        return setInterval(function(){
+            var ra = Math.round(Math.random() * 10 - 3);
+            if(ra > 6)
+                log("I'm bored...")
+            else
+                log('waiting for changes...');
         }, 3000)
     },
     toCompile: function(callback){
@@ -81,7 +97,7 @@ var Robot = {
     }
 };
 (function(){
-    log("## \n Personal - SeeUtopia Robot - Evan (Version " + version + ")\n - JS Compression by Google Closure\n - CSS Compression by YUI Compressor\n##\n");
+    log("## \n Personal - SeeUtopia Robot - Evan (Version " + version + ")\n - JS Compression by Google Closure\n##\n");
     Robot.detectFile();
 })()
 
