@@ -1,5 +1,8 @@
 <h1>Bored Robot</h1>
-<p>A kindly friend that based on nodejs and google closure compiler, automatically detecting and compiling javascript files during the period of development</p>
+<p>A kindly worker that based on nodejs and google closure compiler, automatically detecting and compiling javascript files during the period of development</p>
+
+<h2>Caution</h2>
+<p style="color:red">Do not put any JS core into the 'lib' folder.</p>
 
 <h2>Instrument</h2>
 <ol>
