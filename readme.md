@@ -1,6 +1,9 @@
-<table>
+<table width="100%" border="0">
     <colgroup>
-
+        <col width="15%">
+        <col width="35%">
+        <col width="15%">
+        <col width="35%">
     </colgroup>
     <tbody>
         <tr>
