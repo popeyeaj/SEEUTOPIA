@@ -5,7 +5,7 @@
     function vform(container, exec){
         this.regEx = {
             email: new RegExp("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*"),
-            password: new RegExp("^[A-z][^.]{5,17}"),
+            password: [new RegExp("^[A-z][^.]{5,17}"), new RegExp("^\\d+$"), new RegExp("^[a-zA-Z]+$"), new RegExp("^[-+=|,!@#$%^&*?_.~+/\\\\(){}\\[\\]<>]+$"), new RegExp("^([\\s\\S])\\1*$")],//normal, allnum, allletter, allchar, allsame
             mobile: new RegExp("^1[3458]\\d{9}$"),
             //expanded
             semail: new RegExp("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*"),
@@ -238,7 +238,20 @@
             return String(value).length > 0 ? false : true;
         },
         isRegExPassed: function(type, value){
-            return this.regEx[type].test(String(value));
+            if(this.regEx[type] instanceof Array === true){
+                if(this.regEx[type][0].test(String(value))){
+                    var _status = true;
+                    for(var i=1; i< this.regEx[type].length; i++){
+                        if(this.regEx[type][i].test(String(value))){
+                            _status = false;
+                            break;
+                        }
+                    }
+                    return _status;
+                }
+            }
+            else{
+                return this.regEx[type].test(String(value));}
         },
         isSame: function(val1, val2){
             return val1 == val2;
