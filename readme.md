@@ -6,7 +6,7 @@
         <strong>Shanghai, China</strong><br>
         <a href="http://www.seeutopia.com" target="_blank">http://www.seeutopia.com</a> (unavailable right now)<br>
         <a href="mailto:frienkyliu@hotmail.com">frienkyliu@hotmail.com</a><br>
-        QQ:93129471
+        QQ:48112111
     </dd>
 </dl>
 
