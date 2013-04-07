@@ -1,7 +1,6 @@
-
 JS_DIR = 'lib/'
-JS_COMPILER_CORE = 'lib/compiler.jar';
-JS_LIST_PATH = 'lib/_jsfiles.list';
+JS_COMPILER_CORE = 'compiler.jar';
+JS_LIST_PATH = '_jsfiles.list';
 JS_OUTPUT_FILE = 'live/utopia.min.js';
 
 
@@ -32,7 +31,7 @@ var Robot = {
     detectFile: function(){
         var fs = require('fs'),
             js_list = fs.readFileSync(JS_LIST_PATH, 'utf8'),
-            lines = js_list.split('\r\n');
+            lines = js_list.split(/\n/);
             d = this;
         for(var i=0; i<lines.length; i++){
             if(lines[i][0] != '#' && lines[i].trim().indexOf('.js')!=-1){
@@ -40,9 +39,27 @@ var Robot = {
             }
         }
         if(this.js_files.length){
-            this.toCompile(function(){
-                d.switch_compile = d.fileListener();
-                d.fileWatcher();
+            var _files = [],
+                filelist = this.js_files,
+                err = 'XXX --- No existing files: ';
+
+            fs.readdir(JS_DIR, function(error, files){
+                for(var i=0; i<filelist.length; i++){
+                    var js_f = filelist[i];
+                    if(files.indexOf(js_f.split(JS_DIR)[1]) == -1){
+                        _files.push(js_f);
+                    }
+                }
+                if(_files.length){
+                    _files = _files.join(', ')
+                    log(err + _files.toString() + ' ');
+                }
+                else{
+                    d.toCompile(function(){
+                        d.switch_compile = d.fileListener();
+                        d.fileWatcher();
+                    });
+                }
             });
         }
         else{
@@ -51,22 +68,17 @@ var Robot = {
     },
     fileWatcher: function(){
         var Bot = this,
-            count = 0;
-        Bot.fs.watch(JS_DIR, function(event, filename){
-            count++;
+            listener = Bot.fs.watch(JS_DIR);
+        listener.on('change', function(event, filename){
             filename = JS_DIR + filename;
-            if(count == 3){
-                for(var i=0; i<Bot.js_files.length; i++){
-                    if(filename == Bot.js_files[i]){
-                        if(Bot.switch_compile != null) clearInterval(Bot.switch_compile);
-                        log('--->Doing some fucking works!')
-                        Bot.toCompile(function(){
-                            Bot.switch_compile = Bot.fileListener();
-                            Bot.fileWatcher();
-                        });
-                        break;
-                    }
-                }
+            if(Bot.js_files.indexOf(filename) > -1){
+                this.close();
+                if(Bot.switch_compile != null) clearInterval(Bot.switch_compile);
+                log('--->Doing some fucking works!')
+                Bot.toCompile(function(){
+                    Bot.switch_compile = Bot.fileListener();
+                    Bot.fileWatcher();
+                });
             }
         });
     },
@@ -77,7 +89,7 @@ var Robot = {
                 log("I'm bored...")
             else
                 log('waiting for changes...');
-        }, 3000)
+        }, 6000)
     },
     toCompile: function(callback){
         if(this.switch_compile) clearInterval(this.switch_compile);
