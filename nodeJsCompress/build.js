@@ -12,9 +12,9 @@ var log = function(n){
 
 var Robot = {
     switch_compile:null,
-    js_files: new Array(),
-    recent_modified: new Array(),
-    last_modified: new Array(),
+    js_files: [],
+    recent_modified: [],
+    last_modified: [],
     fs: require('fs'),
     msg: ["Watching for changes...",
             "Stupid human beings, just give me something fun to do!!!",
@@ -121,19 +121,21 @@ var Robot = {
     },
     toCompile: function(callback){
         if(this.switch_compile) clearInterval(this.switch_compile);
-        var _jslist = this.js_files.join(' ');
-        var exec = require('child_process').exec;
-        var commandText = 'java -jar '+ JS_COMPILER_CORE +' --js '+ _jslist +' --js_output_file ' + JS_OUTPUT_FILE;
-        exec(commandText, function(err){
-            if(err == null){
-                log('---->Mission\'s Complete! They should be compiled in "' + JS_OUTPUT_FILE + '"\r\r');
-            }
-            else{
-                log(err);
-            }
+        var _jslist = this.js_files,
+            exec = require('child_process').exec,
+            fs = require('fs'),
+            uglifyjs = require('uglify-js');
+        try{
+            var result = uglifyjs.minify(_jslist);
+            fs.writeFileSync(JS_OUTPUT_FILE, result.code, 'utf8');
+            log('---->Mission\'s Complete! They should be compiled in "' + JS_OUTPUT_FILE + '"\r\r');
             if(callback != undefined)
                 callback();
-        });
+        }
+        catch(err){
+            throw err;
+        }
+
     }
 };
 (function(){
