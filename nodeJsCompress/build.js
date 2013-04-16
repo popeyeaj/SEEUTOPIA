@@ -57,7 +57,7 @@ var Robot = {
             d = this;
         for(var i=0; i<lines.length; i++){
             if(lines[i][0] != '#' && lines[i].trim().indexOf('.js')!=-1){
-                this.js_files.push(lines[i].toString());
+                this.js_files.push(lines[i].trim());
             }
         }
         if(this.js_files.length){
@@ -67,8 +67,8 @@ var Robot = {
 
             fs.readdir(JS_DIR, function(error, files){
                 for(var i=0; i<filelist.length; i++){
-                    var js_f = filelist[i];
-                    if(files.indexOf(js_f.split(JS_DIR)[1]) == -1){
+                    var js_f = filelist[i].trim().split(JS_DIR)[1];
+                    if(files.indexOf(js_f) == -1){
                         _files.push(js_f);
                     }
                 }
