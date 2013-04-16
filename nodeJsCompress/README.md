@@ -8,7 +8,7 @@
 <ol>
   <li>Install 
       <a href="http://nodejs.org" target="_blank">Node.Js</a> and 
-      <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank">JRE</a></li>
+      <a href="https://github.com/mishoo/UglifyJS2" target="_blank">Uglify2</a></li>
   <li>Put the package in your project.</li>
   <li>Bring script files you need compile in the called 'lib' folder </li>
   <li>Edit the '_jsfiles.list' file, and insert script files-name to it in sequence.</li>
