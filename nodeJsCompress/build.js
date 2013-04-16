@@ -126,7 +126,11 @@ var Robot = {
             fs = require('fs'),
             uglifyjs = require('uglify-js');
         try{
-            var result = uglifyjs.minify(_jslist);
+            var result = uglifyjs.minify(_jslist, {
+                    comments:true,
+                    compress:true,
+                    mangle:true
+            });
             fs.writeFileSync(JS_OUTPUT_FILE, result.code, 'utf8');
             log('---->Mission\'s Complete! They should be compiled in "' + JS_OUTPUT_FILE + '"\r\r');
             if(callback != undefined)
