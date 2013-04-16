@@ -1,5 +1,4 @@
-JS_DIR = 'lib/'
-JS_COMPILER_CORE = 'compiler.jar';
+JS_DIR = 'lib/';
 JS_LIST_PATH = '_jsfiles.list';
 JS_OUTPUT_FILE = 'live/utopia.min.js';
 
