@@ -142,7 +142,7 @@ var Robot = {
     }
 };
 (function(){
-    log("## \n Personal - SeeUtopia Robot - Evan (Version " + version + ")\n - JS Compression by Google Closure\n##\n");
+    log("## \n Personal - SeeUtopia Robot - Evan (Version " + version + ")\n - JS Compression by Uglify2\n##\n");
     Robot.detectFile();
 })()
 
