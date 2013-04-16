@@ -122,7 +122,6 @@ var Robot = {
     toCompile: function(callback){
         if(this.switch_compile) clearInterval(this.switch_compile);
         var _jslist = this.js_files,
-            exec = require('child_process').exec,
             fs = require('fs'),
             uglifyjs = require('uglify-js');
         try{
