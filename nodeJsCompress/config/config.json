@@ -1,0 +1,11 @@
+{
+    "JS_LIST_PATH": "config/_m_ecpic.list",
+    "JS_DIR": "/Users/Evan/Sites/m_ecpic/themes/default/js/",
+    "COMPRESS": {
+        "DEVJS": [
+                "/Users/Evan/Sites/m_ecpic/themes/default/js/lib/zepto.swipe.js",
+                "/Users/Evan/Sites/m_ecpic/themes/default/js/utopia.js"
+            ],
+        "LIVEJS": "/Users/Evan/Sites/m_ecpic/themes/default/js/live/prod.js"
+    }
+}

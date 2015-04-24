@@ -1,0 +1,1 @@
+var sample_z = 3, b=2; c="1";console.log('fuck');alert('mlgb');alert('gouride');

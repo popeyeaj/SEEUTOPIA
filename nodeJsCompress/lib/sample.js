@@ -1,1 +1,0 @@
-﻿var sample_a = 3;

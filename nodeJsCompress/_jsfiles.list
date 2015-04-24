@@ -1,9 +1,0 @@
-#### RECOMMAND: DO NOT PUT ANY JAVASCRIPT CORE HERE
-#### PLEASE NOTE: Put some scripts that you want to compile here in Sequence.
-#### PLEASE NOTE: No any prefix (#) in the lines that need to be invoked;
-
-# lib/sample.js          //wont be compiled
-
-lib/sample0.js
-lib/sample1.js
-lib/sample2.js
