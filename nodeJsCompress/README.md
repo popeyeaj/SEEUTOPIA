@@ -23,7 +23,7 @@
 	<li>
 		<strong>set config.json</strong><br>
 		set directory path you want to mornitor, js files you hope to compile and path you will save.<br>
-		<img src="http://www.seeutopia.com/demo/resource/20150424-1@2x.jpg" alt="">
+		<img src="http://www.seeutopia.com/demo/resource/20150424-1@2x1.jpg" alt="">
 	</li>
  	<li>double click compress.bat to compile js files automatically <br>
 		Or you can open a command-line tool to type <br>
@@ -40,11 +40,11 @@
 		<ol>
 			<li>
 				<a href="http://nodejs.org" target="_blank">Node.Js</a><br>
-				<strong>安装方式：</strong>下载nodejs安装包，双击进行安装。
+				<strong>第一步：</strong>下载nodejs安装包，双击进行安装。
 			</li>
 			<li>
 				<a href="https://github.com/mishoo/UglifyJS2" target="_blank">Uglify2</a><br>
-				<strong>安装方式：</strong>安装完nodejs打开命令行工具，键入
+				<strong>第二步：</strong>安装完nodejs打开命令行工具，键入
 				<code>npm install uglify-js -g</code>	
 			</li>
 		</ol>
