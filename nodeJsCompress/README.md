@@ -6,14 +6,30 @@
 
 <h2>Instrument</h2>
 <ol>
-  <li>Install 
-      <a href="http://nodejs.org" target="_blank">Node.Js</a> and 
-      <a href="https://github.com/mishoo/UglifyJS2" target="_blank">Uglify2</a></li>
-  <li>Put the package in your project.</li>
-  <li>Bring script files you need compile in the called 'lib' folder </li>
-  <li>Edit the '_jsfiles.list' file, and insert script files-name to it in sequence.</li>
-  <li>Double click 'compress.bat' in the root path</li>
-  <li>Have fun!  ~~~hia hia hia~~~</li>
+	<li>
+		<strong>Install</strong>
+		<ol>
+			<li>
+				<a href="http://nodejs.org" target="_blank">Node.Js</a><br>
+				<strong>step 1: </strong>download nodejs package, and double click to install.
+			</li>
+			<li>
+				<a href="https://github.com/mishoo/UglifyJS2" target="_blank">Uglify2</a><br>
+				<strong>step 2: </strong>open a command-line tools and type <br>
+				<code>npm install uglify-js -g</code>
+			</li>
+		</ol>
+	</li>
+	<li>
+		<strong>set config.json</strong><br>
+		set directory path you want to mornitor, js files you hope to compile and path you will save.<br>
+		<img src="http://www.seeutopia.com/demo/resource/20150424-1@2x.jpg" alt="">
+	</li>
+ 	<li>double click compress.bat to compile js files automatically <br>
+		Or you can open a command-line tool to type <br>
+		<code>node build</code>
+ 	</li>
+ 	<li>finish！have fun!</li>
 </ol>
 
 
@@ -28,7 +44,8 @@
 			</li>
 			<li>
 				<a href="https://github.com/mishoo/UglifyJS2" target="_blank">Uglify2</a><br>
-				<strong>安装方式：</strong>安装完nodejs打开命令行工具，键入npm install uglify-js即可安装。
+				<strong>安装方式：</strong>安装完nodejs打开命令行工具，键入
+				<code>npm install uglify-js -g</code>	
 			</li>
 		</ol>
 	</li>
@@ -38,4 +55,5 @@
 		<img src="http://www.seeutopia.com/demo/resource/20150424-1@2x.jpg" alt="">
 	</li>
 	<li>双击compress.bat即可自动压缩。或者打开命令行工具进入本工具根目录键入node build即可。</li>
+	<li>搞定！</li>
 </ol>
