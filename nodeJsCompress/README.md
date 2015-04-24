@@ -34,7 +34,8 @@
 	</li>
 	<li>
 		<strong>配置config.json文件：</strong><br>
-		设置需要监控的js目录，带压缩的js文件，以及压缩后保存的路径。
+		设置需要监控的js目录，待压缩的js文件，以及压缩后保存的路径。<br>
+		<img src="http://www.seeutopia.com/demo/resource/20150424-1@2x.jpg" alt="">
 	</li>
 	<li>双击compress.bat即可自动压缩。或者打开命令行工具进入本工具根目录键入node build即可。</li>
 </ol>
