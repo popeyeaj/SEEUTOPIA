@@ -44,8 +44,8 @@
 			</li>
 			<li>
 				<a href="https://github.com/mishoo/UglifyJS2" target="_blank">Uglify2</a><br>
-				<strong>第二步：</strong>安装完nodejs打开命令行工具，键入
-				<code>npm install uglify-js -g</code>	
+				<strong>第二步：</strong>安装完nodejs打开命令行工具，进入本工具目录后，键入
+				<code>npm install uglify-js -g</code>
 			</li>
 		</ol>
 	</li>

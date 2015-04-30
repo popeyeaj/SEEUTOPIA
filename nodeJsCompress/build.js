@@ -1,1 +1,146 @@
-var e,i="NodeJsCompress Beta 0.1",t=function(e){console.log(e)},s={switch_compile:null,js_files:[],output_file:"",recent_modified:[],last_modified:[],fs:require("fs"),listener:void 0,msg:["Watching for changes...","Stupid human beings, just give me something fun to do!!!","I'm bored..."],toRecord:function(){for(var e=(require("fs"),[]),i=0;i<this.js_files.length;i++)e.push(this.getHashCode(this.js_files[i]));return this.last_modified=e,this.last_modified.toString()},isSame:function(e){var i,t,s=this;if(s.js_files.indexOf(e)>-1){i=s.js_files.indexOf(e);var o=s.getHashCode(s.js_files[i]);o!=s.last_modified[i]?(s.last_modified.splice(i,1,o),t="false"):t="true"}return t},getHashCode:function(e){var i,t=require("fs"),s=require("crypto"),o=s.createHash("md5");return i=t.readFileSync(e),o.update(i).digest("hex")},detectFile:function(){var i,s=require("fs"),o=this;if(e=JSON.parse(s.readFileSync("config/config.json","utf8")),i=e.COMPRESS,this.js_files=i.DEVJS.toString().split(","),this.output_file=i.LIVEJS.toString(),this.js_files.length){for(var n=this.js_files,r="XXX --- No existing files: ",l=0;l<n.length;l++){var f=n[l].trim();s.exists(f,function(e){e||t(r+f+" ")})}o.toCompile(function(){o.toRecord(),o.switch_compile=o.fileListener(),o.fileWatcher()})}else t("Did not add any js files yet.")},fileWatcher:function(){var i=this,s=(require("crypto"),e.JS_DIR);listener=i.fs.watch(s,{recursive:!0}),listener.on("change",function(e,o){this.close(),o=s+o;for(var n=0;n<i.js_files.length;n++)if(i.js_files[n].indexOf(o)>-1&&"false"==i.isSame(o)){null!=i.switch_compile&&clearInterval(i.switch_compile),t("--->Doing some fucking works!"),i.toCompile(function(){i.toRecord(),i.switch_compile=i.fileListener()});break}i.fileWatcher()})},fileListener:function(){return setInterval(function(){var e=Math.round(10*Math.random()-3);t(e>6?"I'm bored...":"waiting for changes...")},6e3)},toCompile:function(e){this.switch_compile&&clearInterval(this.switch_compile);var i=this.js_files,s=require("fs"),o=require("uglify-js");try{var n=o.minify(i,{comments:!0,compress:!0,mangle:!0});s.writeFileSync(this.output_file,n.code,"utf8"),t("---->Mission's Complete! They should be compiled in:"),t(this.output_file+"\r\r"),"undefined"!=typeof e&&e()}catch(r){throw r}}};!function(){t("## \n Personal - SeeUtopia Robot - Evan (Version "+i+")\n - JS Compression by Uglify2\n##\n"),s.detectFile()}();
+var CONFIG,
+    version = "NodeJsCompress Beta 0.1",
+    log = function(n){
+        console.log(n);
+    },
+    Robot = {
+    switch_compile:null,
+    js_files: [],
+    output_file:"",
+    recent_modified: [],
+    last_modified: [],
+    fs: require('fs'),
+    listener: undefined,
+    msg: ["Watching for changes...",
+            "Stupid human beings, just give me something fun to do!!!",
+            "I'm bored..."],
+    toRecord: function(){ 
+        var d = this,
+            fs = require('fs'),
+            _temp = [];
+        for(var i=0; i<this.js_files.length; i++){
+            _temp.push( this.getHashCode( this.js_files[i]) );
+        }
+        this.last_modified = _temp;
+        return this.last_modified.toString();
+    },
+    isSame: function(filename){
+        var d = this,
+            dx,
+            result;
+        if( d.js_files.indexOf( filename ) > -1 ){
+            dx = d.js_files.indexOf( filename );
+            var _hash = d.getHashCode( d.js_files[dx] );
+            if( _hash != d.last_modified[dx] ){  //文件被修改
+                d.last_modified.splice( dx, 1, _hash );
+                result = 'false';
+            }
+            else
+                result = 'true';
+        }
+        return result;
+    },
+    getHashCode: function(filename){
+        var fs = require('fs'),
+            crypto = require('crypto'),
+            shasum = crypto.createHash('md5'),
+            result;
+        result = fs.readFileSync(filename);
+        return shasum.update(result).digest('hex');
+    },
+    detectFile: function(){
+        var fs = require('fs'),
+            compress,
+            out_list = [],
+            d = this;
+        CONFIG = JSON.parse( fs.readFileSync('config/config.json', 'utf8') );
+        compress = CONFIG['COMPRESS'];
+
+        
+        this.js_files = compress["DEVJS"].toString().split(',');
+        this.output_file = compress["LIVEJS"].toString();
+
+
+        if(this.js_files.length){
+            var _files = [],
+                filelist = this.js_files,
+                err = 'XXX --- No existing files: ';
+
+            for( var i=0; i<filelist.length; i++ ){
+                var _temp = filelist[i].trim();
+                fs.exists(_temp, function(exist){
+                    if( !exist ){
+                        log(err + _temp + ' ');
+                    }
+                })
+            }
+            d.toCompile(function(){
+                d.toRecord();
+                d.switch_compile = d.fileListener();
+                d.fileWatcher();
+            });
+        }
+        else{
+            log('Did not add any js files yet.');
+        }
+    },
+    fileWatcher: function(){
+        var d = this,
+            cpt = require('crypto'),
+            JS_DIR = CONFIG['JS_DIR'];
+        listener = d.fs.watch( JS_DIR, { recursive:true } );
+        listener.on('change', function(event, filename){ 
+            this.close();
+            filename = JS_DIR + filename;
+            for( var i=0; i<d.js_files.length; i++ ){
+                if( d.js_files[i].indexOf( filename ) > -1 && (d.isSame(filename) == 'false') ){
+                    if(d.switch_compile != null) clearInterval(d.switch_compile);
+                    log('--->Doing some fucking works!')
+                    d.toCompile( function(){
+                        d.toRecord();
+                        d.switch_compile = d.fileListener();
+                    });
+                    break;
+                }
+            }
+            d.fileWatcher();
+        });
+    },
+    fileListener: function(){
+        return setInterval(function(){
+            var ra = Math.round(Math.random() * 10 - 3);
+            if(ra > 6)
+                log("I'm bored...")
+            else
+                log('waiting for changes...');
+        }, 6000)
+    },
+    toCompile: function(callback){
+        if(this.switch_compile) clearInterval(this.switch_compile);
+        var _jslist = this.js_files,
+            fs = require('fs'),
+            uglifyjs = require('uglify-js');
+        try{
+            var result = uglifyjs.minify( _jslist, {
+                comments:true,
+                compress:true,
+                mangle:true
+            });
+            fs.writeFileSync( this.output_file, result.code, 'utf8' );
+            log('---->Mission\'s Complete! They should be compiled in:');
+            log( this.output_file + '\r\r');
+
+            if( typeof callback != 'undefined' )
+                callback();
+        }
+        catch(err){
+            throw err;
+            
+        }
+    }
+};
+(function(){
+    log("## \n Personal - SeeUtopia Robot - Evan (Version " + version + ")\n - JS Compression by Uglify2\n##\n");
+    Robot.detectFile();
+})()
+
